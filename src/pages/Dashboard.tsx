@@ -1,15 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import CredentialModal from "../components/CredentialModal";
 import ProfilePage from "./Profile";
 import ConnectionsPage from "./Connections";
 import SettingsPage from "./Settings";
 import type { UserStats } from "../types";
+import { supabase } from "../supabaseClient";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("dashboard");
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        navigate('/login');
+      } else {
+        setUser(user);
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        navigate('/login');
+      } else if (session?.user) {
+        setUser(session.user);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#0a0f2c] to-[#1c1f40] text-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   const userStats: UserStats = {
     credentials: 0,
     verifiedSkills: 0,
@@ -36,7 +75,7 @@ export default function Dashboard() {
         return (
           <div className="p-6 max-w-7xl mx-auto">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold mb-2">Welcome back, Prathamesh ✨</h2>
+              <h2 className="text-3xl font-bold mb-2">Welcome back, {user?.email?.split('@')[0] || 'User'} ✨</h2>
               <p className="text-gray-300 text-lg">Manage your digital skill passport and track your progress.</p>
             </div>
 
