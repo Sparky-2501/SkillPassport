@@ -10,6 +10,25 @@ export interface CredentialType {
   createdAt: Date;
 }
 
+export interface Profile {
+  id: string;
+  name: string | null;
+  email: string;
+  avatar_url: string | null;
+  linkedin_url: string | null;
+  github_url: string | null;
+  theme: 'dark' | 'light';
+  created_at: string;
+}
+
+export interface Connection {
+  id: string;
+  user_id: string;
+  connection_id: string;
+  created_at: string;
+  profiles?: Profile;
+}
+
 export interface UserStats {
   credentials: number;
   verifiedSkills: number;

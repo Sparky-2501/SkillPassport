@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import CredentialModal from "../components/CredentialModal";
 import ProfilePage from "./Profile";
@@ -7,6 +8,8 @@ import ConnectionsPage from "./Connections";
 import SettingsPage from "./Settings";
 import type { UserStats } from "../types";
 import { supabase } from "../supabaseClient";
+import { useProfile } from "../hooks/useProfile";
+import { useConnections } from "../hooks/useConnections";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -14,6 +17,9 @@ export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const { profile } = useProfile(user?.id);
+  const { connections } = useConnections(user?.id);
   
   // Check authentication status
   useEffect(() => {
@@ -53,7 +59,7 @@ export default function Dashboard() {
     credentials: 0,
     verifiedSkills: 0,
     profileViews: 247,
-    connections: 89
+    connections: connections.length
   };
 
   const statsCards = [
@@ -74,26 +80,44 @@ export default function Dashboard() {
       default:
         return (
           <div className="p-6 max-w-7xl mx-auto">
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold mb-2">Welcome back, {user?.email?.split('@')[0] || 'User'} ✨</h2>
+            <motion.div 
+              className="mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-3xl font-bold mb-2">
+                Welcome back, {profile?.name || user?.email?.split('@')[0] || 'User'} ✨
+              </h2>
               <p className="text-gray-300 text-lg">Manage your digital skill passport and track your progress.</p>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               {statsCards.map((stat, index) => (
-                <div 
+                <motion.div 
                   key={index}
                   className="bg-[#11152e] hover:bg-[#1a1d3a] p-6 rounded-2xl shadow-lg border border-gray-800 transition-all duration-300 hover:scale-105"
+                  whileHover={{ y: -5 }}
                 >
                   <div className={`text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
                     {stat.value}
                   </div>
                   <div className="text-gray-400 text-sm font-medium">{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className="bg-[#11152e] rounded-2xl p-8 border border-gray-800">
+            <motion.div 
+              className="bg-[#11152e] rounded-2xl p-8 border border-gray-800"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               <h3 className="text-2xl font-semibold mb-4">Recent Credentials</h3>
               
               <div className="text-center py-12">
@@ -110,7 +134,7 @@ export default function Dashboard() {
                   Add Your First Credential
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         );
     }
