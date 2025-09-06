@@ -31,7 +31,7 @@ export default function Landing({ setHasVisited }: LandingProps) {
   const handleStart = () => {
     localStorage.setItem("visited", "true");
     setHasVisited(true);
-    navigate("/");
+    navigate("/login");
   };
 
   const scrollToTop = () => {
