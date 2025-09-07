@@ -1,13 +1,12 @@
 export interface CredentialType {
   id: string;
-  title: string;
+  name: string;
   type: string;
   issuer: string;
-  skills: string[];
-  evidenceLinks: string[];
-  description: string;
-  expiryDate?: string;
-  createdAt: Date;
+  issue_date: string;
+  evidence_url?: string;
+  user_id: string;
+  created_at: string;
 }
 
 export interface Profile {
@@ -17,7 +16,7 @@ export interface Profile {
   avatar_url: string | null;
   linkedin_url: string | null;
   github_url: string | null;
-  theme: 'dark' | 'light';
+  theme: 'theme1' | 'theme2' | 'theme3' | 'theme4';
   created_at: string;
 }
 
@@ -25,6 +24,7 @@ export interface Connection {
   id: string;
   user_id: string;
   connection_id: string;
+  status: 'pending' | 'accepted' | 'rejected';
   created_at: string;
   profiles?: Profile;
 }
