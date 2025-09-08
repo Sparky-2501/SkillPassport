@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useTheme, type Theme } from "./hooks/useTheme";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 
 export default function App() {
   const [hasVisited, setHasVisited] = useState(false);
+  
+  // Theme management
+  const currentTheme = (localStorage.getItem('skillpassport-theme') as Theme) || 'theme1';
+  const theme = useTheme(currentTheme);
 
   useEffect(() => {
     const visited = localStorage.getItem("visited");
     if (visited) {
       setHasVisited(true);
     }
+    
+    // Apply theme to document
+    document.documentElement.className = currentTheme;
   }, []);
 
   return (

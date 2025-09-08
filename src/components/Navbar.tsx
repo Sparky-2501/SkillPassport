@@ -1,9 +1,14 @@
 import type { NavbarProps } from "../types";
+import { useTheme, type Theme } from "../hooks/useTheme";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar({ setShowModal, currentPage, setCurrentPage }: NavbarProps) {
   const navigate = useNavigate();
+  
+  // Theme management
+  const currentTheme = (localStorage.getItem('skillpassport-theme') as Theme) || 'theme1';
+  const theme = useTheme(currentTheme);
 
   const navItems = [
     { label: "Home", key: "dashboard" },
@@ -18,7 +23,7 @@ export default function Navbar({ setShowModal, currentPage, setCurrentPage }: Na
     navigate("/");
   };
   return (
-    <nav className="flex justify-between items-center px-6 py-4 bg-[#11152e] border-b border-gray-800">
+    <nav className={`flex justify-between items-center px-6 py-4 ${theme.card} border-b ${theme.border}`}>
       <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
         SkillPassport
       </h1>
@@ -30,8 +35,8 @@ export default function Navbar({ setShowModal, currentPage, setCurrentPage }: Na
             onClick={() => setCurrentPage(item.key)}
             className={`px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
               currentPage === item.key
-                ? 'text-blue-400 bg-blue-400/10' 
-                : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                ? `${theme.accent} bg-blue-400/10` 
+                : `text-gray-300 hover:text-white ${theme.cardHover}`
             }`}
           >
             {item.label}
@@ -40,7 +45,7 @@ export default function Navbar({ setShowModal, currentPage, setCurrentPage }: Na
         
         <button 
           onClick={() => setShowModal(true)}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105"
+          className={`bg-gradient-to-r ${theme.button} ${theme.buttonHover} px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105`}
         >
           Add Credential
         </button>
