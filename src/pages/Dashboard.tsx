@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Award, Calendar, ExternalLink, FileText, User, Eye } from "lucide-react";
+import { Award, Calendar, ExternalLink, FileText, User, Eye, CheckCircle, AlertTriangle } from "lucide-react";
 import Navbar from "../components/Navbar";
 import CredentialModal from "../components/CredentialModal";
+import Chatbot from "../components/Chatbot";
 import ProfilePage from "./Profile";
 import ConnectionsPage from "./Connections";
 import SettingsPage from "./Settings";
@@ -193,6 +194,21 @@ export default function Dashboard() {
                         {new Date(credential.issue_date).toLocaleDateString()}
                       </div>
                       
+                      {/* Verification Status */}
+                      <div className="mb-4">
+                        {credential.evidence_url ? (
+                          <span className="inline-flex items-center px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium border border-green-500/30">
+                            <CheckCircle className="w-3 h-3 mr-1" />
+                            Verified
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-medium border border-yellow-500/30">
+                            <AlertTriangle className="w-3 h-3 mr-1" />
+                            Non Verified
+                          </span>
+                        )}
+                      </div>
+                      
                       {credential.evidence_url && (
                         <a
                           href={credential.evidence_url}
@@ -216,9 +232,12 @@ export default function Dashboard() {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${theme.background} text-white`}>
+    <div className={`min-h-screen bg-gradient-to-b ${theme.background} text-white relative`}>
       <Navbar setShowModal={setShowModal} currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {renderCurrentPage()}
+
+      {/* AI Chatbot */}
+      <Chatbot />
 
       {showModal && user && (
         <CredentialModal 

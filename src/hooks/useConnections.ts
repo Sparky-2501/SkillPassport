@@ -107,7 +107,7 @@ export function useConnections(userId: string | undefined) {
     }
   };
 
-  const sendConnectionRequest = async (connectionId: string) => {
+  const addConnection = async (connectionId: string) => {
     if (!userId) return;
 
     try {
@@ -130,7 +130,7 @@ export function useConnections(userId: string | undefined) {
     }
   };
 
-  const acceptConnectionRequest = async (requestId: string) => {
+  const acceptConnection = async (requestId: string) => {
     try {
       const { error } = await supabase
         .from('connections')
@@ -148,7 +148,7 @@ export function useConnections(userId: string | undefined) {
     }
   };
 
-  const rejectConnectionRequest = async (requestId: string) => {
+  const rejectConnection = async (requestId: string) => {
     try {
       const { error } = await supabase
         .from('connections')
@@ -192,9 +192,9 @@ export function useConnections(userId: string | undefined) {
     availableUsers,
     loading,
     error,
-    sendConnectionRequest,
-    acceptConnectionRequest,
-    rejectConnectionRequest,
+    addConnection,
+    acceptConnection,
+    rejectConnection,
     removeConnection,
     refetch: () => {
       fetchConnections();
