@@ -125,7 +125,7 @@ export default function SettingsPage() {
 
   if (loading) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b ${theme.background} text-white flex items-center justify-center`}>
+      <div className={`min-h-screen bg-gradient-to-b ${theme.background} ${theme.text} flex items-center justify-center`}>
         <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -146,18 +146,18 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
       <motion.div
         initial="initial"
         animate="animate"
         variants={staggerContainer}
       >
         <motion.div className="mb-8" variants={fadeInUp}>
-          <h2 className="text-3xl font-bold mb-2 flex items-center">
-            <Settings className={`w-8 h-8 mr-3 ${theme.accent}`} />
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-2 flex items-center ${theme.text}`}>
+            <Settings className={`w-6 sm:w-8 h-6 sm:h-8 mr-3 ${theme.accent}`} />
             Settings
           </h2>
-          <p className="text-gray-300">Manage your account preferences and security settings</p>
+          <p className={theme.textSecondary}>Manage your account preferences and security settings</p>
         </motion.div>
 
         {/* Message Display */}
@@ -175,23 +175,23 @@ export default function SettingsPage() {
           </motion.div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Appearance Settings */}
           <motion.div className={`${theme.card} rounded-2xl p-6 ${theme.border} border`} variants={fadeInUp}>
-            <h3 className="text-xl font-semibold mb-6 flex items-center">
+            <h3 className={`text-xl font-semibold mb-6 flex items-center ${theme.text}`}>
               <Palette className={`w-5 h-5 mr-2 ${theme.accent}`} />
               Appearance
             </h3>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-3">
+                <label className={`block text-sm font-medium ${theme.textSecondary} mb-3`}>
                   Theme Selection
                 </label>
                 <select
                   value={currentTheme}
                   onChange={(e) => handleThemeChange(e.target.value as Theme)}
-                  className={`w-full p-3 ${theme.card} border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors`}
+                  className={`w-full p-3 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors`}
                 >
                   {Object.entries(themes).map(([key, themeData]) => (
                     <option key={key} value={key} className={theme.card}>
@@ -203,8 +203,8 @@ export default function SettingsPage() {
 
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-white">Notifications</p>
-                  <p className="text-sm text-gray-400">Receive updates about your credentials</p>
+                  <p className={`font-medium ${theme.text}`}>Notifications</p>
+                  <p className={`text-sm ${theme.textSecondary}`}>Receive updates about your credentials</p>
                 </div>
                 <button
                   className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors bg-green-600"
@@ -217,7 +217,7 @@ export default function SettingsPage() {
 
           {/* Security Settings */}
           <motion.div className={`${theme.card} rounded-2xl p-6 ${theme.border} border`} variants={fadeInUp}>
-            <h3 className="text-xl font-semibold mb-6 flex items-center">
+            <h3 className={`text-xl font-semibold mb-6 flex items-center ${theme.text}`}>
               <Shield className="w-5 h-5 mr-2 text-green-400" />
               Security
             </h3>
@@ -225,7 +225,7 @@ export default function SettingsPage() {
             <div className="space-y-4">
               <button 
                 onClick={() => setShowPasswordForm(!showPasswordForm)}
-                className={`w-full bg-gradient-to-r ${theme.button} ${theme.buttonHover} py-3 px-4 rounded-xl font-medium transition-colors text-left flex items-center`}
+                className={`w-full bg-gradient-to-r ${theme.button} ${theme.buttonHover} py-3 px-4 rounded-xl font-medium transition-colors text-left flex items-center text-white`}
               >
                 <Key className="w-4 h-4 mr-2" />
                 Change Password
@@ -236,7 +236,7 @@ export default function SettingsPage() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className={`space-y-4 p-4 bg-[#1a1d3a] rounded-xl border border-gray-700`}
+                  className={`space-y-4 p-4 ${theme.card} rounded-xl border ${theme.border}`}
                 >
                   <div className="relative">
                     <input
@@ -244,12 +244,12 @@ export default function SettingsPage() {
                       placeholder="New Password"
                       value={passwordData.newPassword}
                       onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
-                      className={`w-full p-3 ${theme.card} border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors pr-12`}
+                      className={`w-full p-3 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors pr-12`}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                      className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${theme.textSecondary} hover:${theme.text}`}
                     >
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
@@ -259,12 +259,12 @@ export default function SettingsPage() {
                     placeholder="Confirm New Password"
                     value={passwordData.confirmPassword}
                     onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
-                    className={`w-full p-3 ${theme.card} border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors`}
+                    className={`w-full p-3 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors`}
                   />
                   <div className="flex space-x-2">
                     <button
                       onClick={handlePasswordChange}
-                      className="flex-1 bg-green-600 hover:bg-green-700 py-2 px-4 rounded-lg font-medium transition-colors"
+                      className="flex-1 bg-green-600 hover:bg-green-700 py-2 px-4 rounded-lg font-medium transition-colors text-white"
                     >
                       Update Password
                     </button>
@@ -273,7 +273,7 @@ export default function SettingsPage() {
                         setShowPasswordForm(false);
                         setPasswordData({ newPassword: '', confirmPassword: '' });
                       }}
-                      className="flex-1 bg-gray-600 hover:bg-gray-700 py-2 px-4 rounded-lg font-medium transition-colors"
+                      className="flex-1 bg-gray-600 hover:bg-gray-700 py-2 px-4 rounded-lg font-medium transition-colors text-white"
                     >
                       Cancel
                     </button>
@@ -281,17 +281,17 @@ export default function SettingsPage() {
                 </motion.div>
               )}
               
-              <button className="w-full bg-purple-600 hover:bg-purple-700 py-3 px-4 rounded-xl font-medium transition-colors text-left">
+              <button className="w-full bg-purple-600 hover:bg-purple-700 py-3 px-4 rounded-xl font-medium transition-colors text-left text-white">
                 Enable Two-Factor Authentication
               </button>
               
-              <button className="w-full bg-gray-600 hover:bg-gray-700 py-3 px-4 rounded-xl font-medium transition-colors text-left">
+              <button className="w-full bg-gray-600 hover:bg-gray-700 py-3 px-4 rounded-xl font-medium transition-colors text-left text-white">
                 Download Account Data
               </button>
               
               <button 
                 onClick={handleDeleteAccount}
-                className="w-full bg-red-600 hover:bg-red-700 py-3 px-4 rounded-xl font-medium transition-colors text-left flex items-center"
+                className="w-full bg-red-600 hover:bg-red-700 py-3 px-4 rounded-xl font-medium transition-colors text-left flex items-center text-white"
               >
                 <Trash2 className="w-4 h-4 mr-2" />
                 Delete Account
@@ -302,7 +302,7 @@ export default function SettingsPage() {
 
         {/* Activity Log */}
         <motion.div className={`mt-8 ${theme.card} rounded-2xl p-6 ${theme.border} border`} variants={fadeInUp}>
-          <h3 className="text-xl font-semibold mb-6 flex items-center">
+          <h3 className={`text-xl font-semibold mb-6 flex items-center ${theme.text}`}>
             <Activity className="w-5 h-5 mr-2 text-purple-400" />
             Recent Activity
           </h3>
@@ -311,7 +311,7 @@ export default function SettingsPage() {
             {activityLog.map((activity, index) => (
               <div 
                 key={index} 
-                className={`bg-[#1a1d3a] p-4 rounded-xl border border-gray-700 ${theme.cardHover} transition-colors`}
+                className={`${theme.card} p-4 rounded-xl border ${theme.border} ${theme.cardHover} transition-colors`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
@@ -320,9 +320,9 @@ export default function SettingsPage() {
                       activity.type === 'verification' ? 'bg-green-400' :
                       activity.type === 'profile' ? 'bg-purple-400' : 'bg-yellow-400'
                     }`}></div>
-                    <p className="text-white font-medium">{activity.action}</p>
+                    <p className={`${theme.text} font-medium`}>{activity.action}</p>
                   </div>
-                  <p className="text-gray-400 text-sm">{activity.date}</p>
+                  <p className={`${theme.textSecondary} text-sm`}>{activity.date}</p>
                 </div>
               </div>
             ))}

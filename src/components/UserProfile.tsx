@@ -81,7 +81,7 @@ export default function UserProfile({ userId, onClose }: UserProfileProps) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
         <div className={`${theme.card} p-8 rounded-2xl border ${theme.border}`}>
-          <p className="text-white">Profile not found</p>
+          <p className={theme.text}>Profile not found</p>
           <button onClick={onClose} className="mt-4 text-blue-400 hover:text-blue-300">
             Close
           </button>
@@ -105,11 +105,11 @@ export default function UserProfile({ userId, onClose }: UserProfileProps) {
         exit={{ opacity: 0, scale: 0.9 }}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-inherit p-6 border-b border-gray-700 flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-white">Profile</h2>
+        <div className={`sticky top-0 bg-inherit p-6 border-b ${theme.border} flex justify-between items-center`}>
+          <h2 className={`text-2xl font-bold ${theme.text}`}>Profile</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors"
+            className={`${theme.textSecondary} hover:${theme.text} transition-colors`}
           >
             <X className="w-6 h-6" />
           </button>
@@ -131,10 +131,10 @@ export default function UserProfile({ userId, onClose }: UserProfileProps) {
                 )}
               </div>
               <div>
-                <h3 className="text-3xl font-bold text-white mb-2">
+                <h3 className={`text-3xl font-bold ${theme.text} mb-2`}>
                   {profile.name || 'Anonymous User'}
                 </h3>
-                <div className="flex items-center text-gray-300 mb-2">
+                <div className={`flex items-center ${theme.textSecondary} mb-2`}>
                   <Mail className="w-4 h-4 mr-2" />
                   {profile.email}
                 </div>
@@ -167,18 +167,18 @@ export default function UserProfile({ userId, onClose }: UserProfileProps) {
 
             {/* Credentials Section */}
             <div>
-              <h4 className="text-2xl font-semibold mb-6 flex items-center text-white">
+              <h4 className={`text-2xl font-semibold mb-6 flex items-center ${theme.text}`}>
                 <Award className={`w-6 h-6 mr-2 ${theme.accent}`} />
                 Credentials ({credentials.length})
               </h4>
               
               {credentials.length === 0 ? (
                 <div className="text-center py-12">
-                  <Award className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-400 text-lg">No credentials shared</p>
+                  <Award className={`w-16 h-16 ${theme.textSecondary} mx-auto mb-4`} />
+                  <p className={`${theme.textSecondary} text-lg`}>No credentials shared</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {credentials.map((credential) => (
                     <motion.div
                       key={credential.id}
@@ -207,9 +207,9 @@ export default function UserProfile({ userId, onClose }: UserProfileProps) {
                       </div>
                       
                       <h5 className="text-lg font-semibold text-white mb-2">{credential.name}</h5>
-                      <p className="text-gray-400 text-sm mb-3">{credential.issuer}</p>
+                      <p className={`${theme.textSecondary} text-sm mb-3`}>{credential.issuer}</p>
                       
-                      <div className="flex items-center text-gray-500 text-sm mb-4">
+                      <div className={`flex items-center ${theme.textSecondary} text-sm mb-4`}>
                         <Calendar className="w-4 h-4 mr-2" />
                         {new Date(credential.issue_date).toLocaleDateString()}
                       </div>

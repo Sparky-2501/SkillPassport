@@ -66,7 +66,7 @@ export default function Chatbot() {
     }
     
     if (message.includes('theme') || message.includes('color') || message.includes('appearance')) {
-      return "🎨 **Theme Customization:**\n\n**Available Themes:**\n• Ocean Blue (Professional)\n• Rose Garden (Elegant)\n• Forest Night (Nature)\n• Sunset Fire (Bold)\n\n**How to Change:**\n1. Go to Settings page\n2. Find 'Appearance' section\n3. Select your preferred theme\n4. Changes apply instantly!\n\nYour theme choice is saved automatically.";
+      return "🎨 **Theme Customization:**\n\n**Available Themes:**\n• Ocean Blue (Professional)\n• Rose Garden (Elegant)\n• Forest Night (Nature)\n• Sunset Fire (Bold)\n• Purple Dream (Creative)\n• Cyber Teal (Modern)\n\n**How to Change:**\n1. Go to Settings page\n2. Find 'Appearance' section\n3. Select your preferred theme\n4. Changes apply instantly!\n\nYour theme choice is saved automatically.";
     }
     
     // Default responses
@@ -116,10 +116,10 @@ export default function Chatbot() {
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Chat Button - Fixed to left bottom */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r ${theme.button} rounded-full shadow-lg flex items-center justify-center z-40`}
+        className={`fixed bottom-6 left-6 w-14 h-14 bg-gradient-to-r ${theme.button} rounded-full shadow-lg flex items-center justify-center z-40`}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0, scale: 0 }}
@@ -133,13 +133,13 @@ export default function Chatbot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-24 right-6 w-96 h-[500px] bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 shadow-2xl z-50 flex flex-col"
+            className={`fixed bottom-24 left-6 w-96 h-[500px] ${theme.card} backdrop-blur-lg rounded-2xl border ${theme.border} shadow-2xl z-50 flex flex-col`}
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
           >
             {/* Header */}
-            <div className={`p-4 border-b border-white/20 flex items-center justify-between bg-gradient-to-r ${theme.button} rounded-t-2xl`}>
+            <div className={`p-4 border-b ${theme.border} flex items-center justify-between bg-gradient-to-r ${theme.button} rounded-t-2xl`}>
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
                   <Bot className="w-5 h-5 text-white" />
@@ -180,7 +180,7 @@ export default function Chatbot() {
                     </div>
                     <div className={`p-3 rounded-2xl ${
                       message.isBot 
-                        ? 'bg-white/10 text-white' 
+                        ? `${theme.card} ${theme.text}` 
                         : `bg-gradient-to-r ${theme.button} text-white`
                     }`}>
                       <p className="text-sm whitespace-pre-line">{message.text}</p>
@@ -199,7 +199,7 @@ export default function Chatbot() {
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center bg-gradient-to-r ${theme.button}`}>
                       <Bot className="w-3 h-3 text-white" />
                     </div>
-                    <div className="bg-white/10 p-3 rounded-2xl">
+                    <div className={`${theme.card} p-3 rounded-2xl`}>
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -213,7 +213,7 @@ export default function Chatbot() {
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-white/20">
+            <div className={`p-4 border-t ${theme.border}`}>
               <div className="flex space-x-2">
                 <input
                   type="text"
@@ -221,7 +221,7 @@ export default function Chatbot() {
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me anything..."
-                  className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/60 focus:outline-none focus:border-white/40 transition-colors"
+                  className={`flex-1 ${theme.card} border ${theme.border} rounded-xl px-4 py-2 ${theme.text} placeholder-gray-400 focus:outline-none focus:border-blue-400 transition-colors`}
                 />
                 <button
                   onClick={handleSendMessage}

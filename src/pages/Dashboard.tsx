@@ -67,7 +67,7 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b ${theme.background} text-white flex items-center justify-center`}>
+      <div className={`min-h-screen bg-gradient-to-b ${theme.background} ${theme.text} flex items-center justify-center`}>
         <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -97,22 +97,22 @@ export default function Dashboard() {
         return <SettingsPage />;
       default:
         return (
-          <div className="p-6 max-w-7xl mx-auto">
+          <div className="p-4 sm:p-6 max-w-7xl mx-auto">
             <motion.div 
               className="mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl font-bold mb-2">
+              <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${theme.text}`}>
                 Welcome back, {profile?.name || user?.email?.split('@')[0] || 'User'} ✨
               </h2>
-              <p className="text-gray-300 text-lg">Manage your digital skill passport and track your progress.</p>
+              <p className={`${theme.textSecondary} text-base sm:text-lg`}>Manage your digital skill passport and track your progress.</p>
             </motion.div>
 
             {/* Stats Cards */}
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -120,76 +120,76 @@ export default function Dashboard() {
               {statsCards.map((stat, index) => (
                 <motion.div 
                   key={index}
-                  className={`${theme.card} ${theme.cardHover} p-6 rounded-2xl shadow-lg border ${theme.border} transition-all duration-300`}
+                  className={`${theme.card} ${theme.cardHover} p-4 sm:p-6 rounded-2xl shadow-lg border ${theme.border} transition-all duration-300`}
                   whileHover={{ y: -5, scale: 1.02 }}
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <stat.icon className={`w-8 h-8 ${theme.accent}`} />
-                    <div className={`text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                    <stat.icon className={`w-6 sm:w-8 h-6 sm:h-8 ${theme.accent}`} />
+                    <div className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                       {stat.value}
                     </div>
                   </div>
-                  <div className="text-gray-400 text-sm font-medium">{stat.label}</div>
+                  <div className={`${theme.textSecondary} text-xs sm:text-sm font-medium`}>{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
 
             {/* Credentials Section */}
             <motion.div 
-              className={`${theme.card} rounded-2xl p-8 border ${theme.border}`}
+              className={`${theme.card} rounded-2xl p-6 sm:p-8 border ${theme.border}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-semibold flex items-center">
-                  <Award className={`w-6 h-6 mr-2 ${theme.accent}`} />
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-4 sm:space-y-0">
+                <h3 className={`text-xl sm:text-2xl font-semibold flex items-center ${theme.text}`}>
+                  <Award className={`w-5 sm:w-6 h-5 sm:h-6 mr-2 ${theme.accent}`} />
                   My Credentials ({credentials.length})
                 </h3>
                 <button
                   onClick={() => setShowModal(true)}
-                  className={`bg-gradient-to-r ${theme.button} ${theme.buttonHover} px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105`}
+                  className={`bg-gradient-to-r ${theme.button} ${theme.buttonHover} px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 text-white text-sm sm:text-base`}
                 >
                   Add Credential
                 </button>
               </div>
               
               {credentials.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="text-6xl mb-4">🏆</div>
-                  <p className="text-gray-400 text-lg mb-6">No Credentials Yet</p>
-                  <p className="text-gray-500 mb-8 max-w-md mx-auto">
+                <div className="text-center py-8 sm:py-12">
+                  <div className="text-4xl sm:text-6xl mb-4">🏆</div>
+                  <p className={`${theme.textSecondary} text-base sm:text-lg mb-6`}>No Credentials Yet</p>
+                  <p className={`${theme.textSecondary} mb-6 sm:mb-8 max-w-md mx-auto text-sm sm:text-base`}>
                     Start building your professional reputation by adding your first credential to showcase your expertise.
                   </p>
                   
                   <button
                     onClick={() => setShowModal(true)}
-                    className={`bg-gradient-to-r ${theme.button} ${theme.buttonHover} px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg`}
+                    className={`bg-gradient-to-r ${theme.button} ${theme.buttonHover} px-6 sm:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-white text-sm sm:text-base`}
                   >
                     Add Your First Credential
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                   {credentials.map((credential) => (
                     <motion.div
                       key={credential.id}
-                      className={`${theme.card} ${theme.cardHover} p-6 rounded-xl border ${theme.border} transition-all duration-300`}
+                      className={`${theme.card} ${theme.cardHover} p-4 sm:p-6 rounded-xl border ${theme.border} transition-all duration-300`}
                       whileHover={{ y: -5, scale: 1.02 }}
                     >
                       <div className="flex items-start justify-between mb-4">
-                        <div className={`w-12 h-12 bg-gradient-to-r ${theme.button} rounded-xl flex items-center justify-center`}>
-                          <Award className="w-6 h-6 text-white" />
+                        <div className={`w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r ${theme.button} rounded-xl flex items-center justify-center`}>
+                          <Award className="w-5 sm:w-6 h-5 sm:h-6 text-white" />
                         </div>
-                        <span className={`px-3 py-1 bg-gradient-to-r ${theme.button} rounded-full text-xs font-medium text-white`}>
+                        <span className={`px-2 sm:px-3 py-1 bg-gradient-to-r ${theme.button} rounded-full text-xs font-medium text-white`}>
                           {credential.type}
                         </span>
                       </div>
                       
-                      <h4 className="text-lg font-semibold text-white mb-2">{credential.name}</h4>
-                      <p className="text-gray-400 text-sm mb-3">{credential.issuer}</p>
+                      <h4 className={`text-base sm:text-lg font-semibold ${theme.text} mb-2`}>{credential.name}</h4>
+                      <p className={`${theme.textSecondary} text-sm mb-3`}>{credential.issuer}</p>
                       
-                      <div className="flex items-center text-gray-500 text-sm mb-4">
+                      <div className={`flex items-center ${theme.textSecondary} text-sm mb-4`}>
                         <Calendar className="w-4 h-4 mr-2" />
                         {new Date(credential.issue_date).toLocaleDateString()}
                       </div>
@@ -197,12 +197,12 @@ export default function Dashboard() {
                       {/* Verification Status */}
                       <div className="mb-4">
                         {credential.evidence_url ? (
-                          <span className="inline-flex items-center px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium border border-green-500/30">
+                          <span className="inline-flex items-center px-2 sm:px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium border border-green-500/30">
                             <CheckCircle className="w-3 h-3 mr-1" />
                             Verified
                           </span>
                         ) : (
-                          <span className="inline-flex items-center px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-medium border border-yellow-500/30">
+                          <span className="inline-flex items-center px-2 sm:px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs font-medium border border-yellow-500/30">
                             <AlertTriangle className="w-3 h-3 mr-1" />
                             Non Verified
                           </span>
@@ -232,7 +232,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${theme.background} text-white relative`}>
+    <div className={`min-h-screen bg-gradient-to-b ${theme.background} ${theme.text} relative`}>
       <Navbar setShowModal={setShowModal} currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {renderCurrentPage()}
 

@@ -97,7 +97,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#0a0f2c] to-[#1c1f40] text-white flex items-center justify-center">
+      <div className={`min-h-screen bg-gradient-to-b ${theme.background} ${theme.text} flex items-center justify-center`}>
         <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -110,18 +110,18 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
       <motion.div
         initial="initial"
         animate="animate"
         variants={fadeInUp}
       >
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Profile Settings</h2>
-          <p className="text-gray-300">Manage your personal information and social links</p>
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${theme.text}`}>Profile Settings</h2>
+          <p className={theme.textSecondary}>Manage your personal information and social links</p>
         </div>
 
-        <div className="bg-[#11152e] rounded-2xl p-8 border border-gray-800">
+        <div className={`${theme.card} rounded-2xl p-6 sm:p-8 border ${theme.border}`}>
           <div className="space-y-6">
             {/* Avatar Section */}
             <div className="flex items-center space-x-6 mb-8">
@@ -158,7 +158,7 @@ export default function ProfilePage() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-white">Profile Picture</h3>
-                <p className="text-gray-400">Upload a professional photo (max 2MB)</p>
+                <p className={theme.textSecondary}>Upload a professional photo (max 2MB)</p>
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploading}
@@ -197,7 +197,7 @@ export default function ProfilePage() {
                   value={formData.name} 
                   onChange={handleChange} 
                   placeholder="Enter your full name"
-                  className="w-full p-4 bg-[#1a1d3a] border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors"
+                  className={`w-full p-4 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors`}
                 />
               </div>
 
@@ -212,7 +212,7 @@ export default function ProfilePage() {
                   onChange={handleChange} 
                   placeholder="Enter your email"
                   type="email"
-                  className="w-full p-4 bg-[#1a1d3a] border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors"
+                  className={`w-full p-4 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors`}
                 />
               </div>
 
@@ -226,7 +226,7 @@ export default function ProfilePage() {
                   value={formData.linkedin_url} 
                   onChange={handleChange} 
                   placeholder="https://linkedin.com/in/username"
-                  className="w-full p-4 bg-[#1a1d3a] border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors"
+                  className={`w-full p-4 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors`}
                 />
               </div>
 
@@ -240,7 +240,7 @@ export default function ProfilePage() {
                   value={formData.github_url} 
                   onChange={handleChange} 
                   placeholder="https://github.com/username"
-                  className="w-full p-4 bg-[#1a1d3a] border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors"
+                  className={`w-full p-4 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors`}
                 />
               </div>
             </div>
@@ -249,7 +249,7 @@ export default function ProfilePage() {
               <motion.button 
                 onClick={handleSave}
                 disabled={saving}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-600 disabled:to-gray-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 disabled:scale-100 flex items-center space-x-2"
+                className={`bg-gradient-to-r ${theme.button} ${theme.buttonHover} disabled:from-gray-600 disabled:to-gray-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 disabled:scale-100 flex items-center space-x-2 text-white`}
                 whileHover={{ scale: saving ? 1 : 1.05 }}
                 whileTap={{ scale: saving ? 1 : 0.95 }}
               >

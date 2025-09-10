@@ -99,7 +99,7 @@ export default function ConnectionsPage() {
 
   if (loading) {
     return (
-      <div className={`min-h-screen bg-gradient-to-b ${theme.background} text-white flex items-center justify-center`}>
+      <div className={`min-h-screen bg-gradient-to-b ${theme.background} ${theme.text} flex items-center justify-center`}>
         <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -122,18 +122,18 @@ export default function ConnectionsPage() {
   const filteredData = getFilteredData();
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
       <motion.div
         initial="initial"
         animate="animate"
         variants={staggerContainer}
       >
         <motion.div className="mb-8" variants={fadeInUp}>
-          <h2 className="text-3xl font-bold mb-2 flex items-center">
-            <Users className={`w-8 h-8 mr-3 ${theme.accent}`} />
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-2 flex items-center ${theme.text}`}>
+            <Users className={`w-6 sm:w-8 h-6 sm:h-8 mr-3 ${theme.accent}`} />
             Professional Network
           </h2>
-          <p className="text-gray-300">Discover, connect, and grow your professional network</p>
+          <p className={theme.textSecondary}>Discover, connect, and grow your professional network</p>
         </motion.div>
 
         {/* Message Display */}
@@ -153,7 +153,7 @@ export default function ConnectionsPage() {
 
         {/* Tabs */}
         <motion.div className="mb-8" variants={fadeInUp}>
-          <div className="flex space-x-1 bg-white/5 p-1 rounded-xl">
+          <div className={`flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-1 ${theme.card} p-1 rounded-xl`}>
             {[
               { key: 'discover', label: 'Discover People', count: availableUsers.length },
               { key: 'connections', label: 'My Connections', count: connections.length },
@@ -165,7 +165,7 @@ export default function ConnectionsPage() {
                 className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
                   activeTab === tab.key
                     ? `bg-gradient-to-r ${theme.button} text-white shadow-lg`
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
+                    : `${theme.textSecondary} hover:${theme.text} ${theme.cardHover}`
                 }`}
               >
                 {tab.label} ({tab.count})
@@ -182,7 +182,7 @@ export default function ConnectionsPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder={`Search ${activeTab === 'discover' ? 'people' : activeTab}...`}
-              className={`w-full pl-12 pr-4 py-4 ${theme.card} border border-gray-600 rounded-xl text-white focus:border-blue-500 focus:outline-none transition-colors`}
+              className={`w-full pl-12 pr-4 py-4 ${theme.card} border ${theme.border} rounded-xl ${theme.text} focus:border-blue-500 focus:outline-none transition-colors`}
             />
           </div>
         </motion.div>
@@ -191,20 +191,20 @@ export default function ConnectionsPage() {
         <motion.div variants={fadeInUp}>
           {filteredData.length === 0 ? (
             <div className={`${theme.card} rounded-2xl p-12 border ${theme.border} text-center`}>
-              <Users className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg mb-2">
+              <Users className={`w-16 h-16 ${theme.textSecondary} mx-auto mb-4`} />
+              <p className={`${theme.textSecondary} text-lg mb-2`}>
                 {activeTab === 'discover' && 'No new people to discover'}
                 {activeTab === 'connections' && 'No connections yet'}
                 {activeTab === 'requests' && 'No pending requests'}
               </p>
-              <p className="text-gray-500">
+              <p className={theme.textSecondary}>
                 {activeTab === 'discover' && 'All users are already in your network'}
                 {activeTab === 'connections' && 'Start connecting with other professionals'}
                 {activeTab === 'requests' && 'Connection requests will appear here'}
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Discover People */}
               {activeTab === 'discover' && filteredData.map((availableUser: any) => (
                 <motion.div 
