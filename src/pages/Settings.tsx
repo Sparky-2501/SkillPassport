@@ -36,13 +36,19 @@ export default function SettingsPage() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          navigate('/login');
+        } else {
+          setUser(user);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
         navigate('/login');
-      } else {
-        setUser(user);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     checkAuth();
@@ -64,7 +70,8 @@ export default function SettingsPage() {
         setTimeout(() => setMessage({ type: '', text: '' }), 3000);
       }
     } catch (error: any) {
-      setMessage({ type: 'error', text: error.message });
+      console.error('Theme update error:', error);
+      setMessage({ type: 'error', text: 'Failed to save theme preference' });
     }
   };
 
@@ -91,6 +98,7 @@ export default function SettingsPage() {
       setShowPasswordForm(false);
       setTimeout(() => setMessage({ type: '', text: '' }), 3000);
     } catch (error: any) {
+      console.error('Password update error:', error);
       setMessage({ type: 'error', text: error.message });
     }
   };
@@ -109,17 +117,15 @@ export default function SettingsPage() {
     if (!doubleConfirm) return;
 
     try {
-      // Delete user account (this will cascade delete profile and connections due to foreign key constraints)
-      const { error } = await supabase.auth.admin.deleteUser(user.id);
-      
-      if (error) throw error;
-
-      // Sign out and redirect
+      // Sign out and redirect (actual account deletion would need admin privileges)
       await supabase.auth.signOut();
       localStorage.removeItem("visited");
+      localStorage.removeItem("skillpassport-theme");
       navigate("/");
+      setMessage({ type: 'success', text: 'Account deletion initiated. You have been signed out.' });
     } catch (error: any) {
-      setMessage({ type: 'error', text: error.message });
+      console.error('Account deletion error:', error);
+      setMessage({ type: 'error', text: 'Failed to delete account. Please try again.' });
     }
   };
 

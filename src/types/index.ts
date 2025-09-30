@@ -16,7 +16,7 @@ export interface Profile {
   avatar_url: string | null;
   linkedin_url: string | null;
   github_url: string | null;
-  theme: 'theme1' | 'theme2' | 'theme3' | 'theme4';
+  theme: 'theme1' | 'theme2' | 'theme3' | 'theme4' | 'theme5' | 'theme6';
   created_at: string;
 }
 

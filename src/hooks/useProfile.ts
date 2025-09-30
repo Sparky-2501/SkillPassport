@@ -40,7 +40,7 @@ export function useProfile(userId: string | undefined) {
             avatar_url: null,
             linkedin_url: null,
             github_url: null,
-            theme: 'dark' as const
+            theme: 'theme1' as const
           };
 
           const { data: createdProfile, error: createError } = await supabase
@@ -56,6 +56,7 @@ export function useProfile(userId: string | undefined) {
         setProfile(data);
       }
     } catch (err: any) {
+      console.error('Profile fetch error:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -77,6 +78,7 @@ export function useProfile(userId: string | undefined) {
       setProfile(data);
       return data;
     } catch (err: any) {
+      console.error('Profile update error:', err);
       setError(err.message);
       throw err;
     }
@@ -102,6 +104,7 @@ export function useProfile(userId: string | undefined) {
       await updateProfile({ avatar_url: data.publicUrl });
       return data.publicUrl;
     } catch (err: any) {
+      console.error('Avatar upload error:', err);
       setError(err.message);
       throw err;
     }

@@ -5,6 +5,7 @@ import { useProfile } from "../hooks/useProfile";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useTheme, type Theme } from "../hooks/useTheme";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -14,6 +15,10 @@ export default function ProfilePage() {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Theme management
+  const currentTheme = (localStorage.getItem('skillpassport-theme') as Theme) || 'theme1';
+  const theme = useTheme(currentTheme);
 
   const { profile, updateProfile, uploadAvatar, refetch } = useProfile(user?.id);
 

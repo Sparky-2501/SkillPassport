@@ -16,11 +16,24 @@ export function useConnections(userId: string | undefined) {
       return;
     }
 
-    fetchConnections();
-    fetchPendingRequests();
-    fetchSentRequests();
-    fetchAvailableUsers();
+    fetchAllData();
   }, [userId]);
+
+  const fetchAllData = async () => {
+    try {
+      await Promise.all([
+        fetchConnections(),
+        fetchPendingRequests(),
+        fetchSentRequests(),
+        fetchAvailableUsers()
+      ]);
+    } catch (err: any) {
+      console.error('Error fetching connections data:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchConnections = async () => {
     try {
@@ -36,6 +49,7 @@ export function useConnections(userId: string | undefined) {
       if (error) throw error;
       setConnections(data || []);
     } catch (err: any) {
+      console.error('Error fetching connections:', err);
       setError(err.message);
     }
   };
@@ -54,6 +68,7 @@ export function useConnections(userId: string | undefined) {
       if (error) throw error;
       setPendingRequests(data || []);
     } catch (err: any) {
+      console.error('Error fetching pending requests:', err);
       setError(err.message);
     }
   };
@@ -72,6 +87,7 @@ export function useConnections(userId: string | undefined) {
       if (error) throw error;
       setSentRequests(data || []);
     } catch (err: any) {
+      console.error('Error fetching sent requests:', err);
       setError(err.message);
     }
   };
@@ -101,9 +117,8 @@ export function useConnections(userId: string | undefined) {
       
       setAvailableUsers(available);
     } catch (err: any) {
+      console.error('Error fetching available users:', err);
       setError(err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -121,10 +136,11 @@ export function useConnections(userId: string | undefined) {
 
       if (error) throw error;
       
-      // Refresh all lists
+      // Refresh data
       await fetchSentRequests();
       await fetchAvailableUsers();
     } catch (err: any) {
+      console.error('Error adding connection:', err);
       setError(err.message);
       throw err;
     }
@@ -139,10 +155,11 @@ export function useConnections(userId: string | undefined) {
 
       if (error) throw error;
       
-      // Refresh all lists
+      // Refresh data
       await fetchConnections();
       await fetchPendingRequests();
     } catch (err: any) {
+      console.error('Error accepting connection:', err);
       setError(err.message);
       throw err;
     }
@@ -159,7 +176,9 @@ export function useConnections(userId: string | undefined) {
       
       // Refresh pending requests
       await fetchPendingRequests();
+      await fetchAvailableUsers();
     } catch (err: any) {
+      console.error('Error rejecting connection:', err);
       setError(err.message);
       throw err;
     }
@@ -176,10 +195,11 @@ export function useConnections(userId: string | undefined) {
 
       if (error) throw error;
       
-      // Refresh all lists
+      // Refresh data
       await fetchConnections();
       await fetchAvailableUsers();
     } catch (err: any) {
+      console.error('Error removing connection:', err);
       setError(err.message);
       throw err;
     }
@@ -196,11 +216,6 @@ export function useConnections(userId: string | undefined) {
     acceptConnection,
     rejectConnection,
     removeConnection,
-    refetch: () => {
-      fetchConnections();
-      fetchPendingRequests();
-      fetchSentRequests();
-      fetchAvailableUsers();
-    }
+    refetch: fetchAllData
   };
 }

@@ -28,6 +28,7 @@ export function useCredentials(userId: string | undefined) {
       if (error) throw error;
       setCredentials(data || []);
     } catch (err: any) {
+      console.error('Error fetching credentials:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -51,6 +52,7 @@ export function useCredentials(userId: string | undefined) {
       setCredentials(prev => [data, ...prev]);
       return data;
     } catch (err: any) {
+      console.error('Error adding credential:', err);
       setError(err.message);
       throw err;
     }
@@ -75,6 +77,7 @@ export function useCredentials(userId: string | undefined) {
 
       return data.publicUrl;
     } catch (err: any) {
+      console.error('Error uploading certificate:', err);
       setError(err.message);
       throw err;
     }
@@ -90,6 +93,7 @@ export function useCredentials(userId: string | undefined) {
       if (error) throw error;
       setCredentials(prev => prev.filter(c => c.id !== credentialId));
     } catch (err: any) {
+      console.error('Error deleting credential:', err);
       setError(err.message);
       throw err;
     }
